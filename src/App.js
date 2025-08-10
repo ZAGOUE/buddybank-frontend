@@ -7,6 +7,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import AppRoutes from './AppRoutes';
 
 function App() {
+    console.log("API_BASE_URL =", process.env.REACT_APP_API_BASE_URL);
+
     return (
         <AuthProvider>
             <Router>

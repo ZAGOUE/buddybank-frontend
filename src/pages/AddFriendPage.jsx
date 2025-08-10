@@ -17,7 +17,11 @@ export default function AddFriendPage() {
         api.get(`/friends/of/${user.id}`, {
             headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
         })
-            .then(res => setFriends(res.data.map(f => f.friend)))
+            .then(res => {
+                console.log("Donnée brute amis:", res.data);
+                // Utilise la bonne structure selon ce que tu vois dans le log :
+                setFriends(res.data); // OU setFriends(res.data.map(f => f.friend));
+            })
             .catch(() => setFriends([]));
     }, [user]);
 
@@ -50,7 +54,7 @@ export default function AddFriendPage() {
                 api.get(`/friends/of/${user.id}`, {
                     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
                 })
-                    .then(res => setFriends(res.data.map(f => f.friend)))
+                    .then(res => setFriends(res.data))
                     .catch(() => {});
                 setSuggestions(prev => prev.filter(u => u.id !== friendId));
             })
@@ -58,11 +62,15 @@ export default function AddFriendPage() {
     };
 
     // Récupère juste les IDs pour le filtre
-    const friendIds = friends.map(f => f.id);
+    const friendIds = (Array.isArray(friends) ? friends : [])
+        .filter(f => !!f && typeof f.id !== "undefined" && !!f.email)
+        .map(f => f.id);
+
+
 
     return (
         <>
-            {/* HEADER toujours visible en haut de la page */}
+
             <BuddyBankHeader user={user} onLogout={logout} />
         <div className="container mt-5">
             <h2>Ajouter un ami</h2>
@@ -121,14 +129,17 @@ export default function AddFriendPage() {
                         </tr>
                         </thead>
                         <tbody>
-                        {friends.map(friend => (
-                            <tr key={friend.id}>
-                                <td>{friend.email}</td>
-                                <td>{friend.firstname}</td>
-                                <td>{friend.lastname}</td>
-                            </tr>
-                        ))}
+                        {(Array.isArray(friends) ? friends : [])
+                            .filter(f => !!f && typeof f.id !== "undefined" && !!f.email)
+                            .map(friend => (
+                                <tr key={friend.id}>
+                                    <td>{friend.email}</td>
+                                    <td>{friend.firstname}</td>
+                                    <td>{friend.lastname}</td>
+                                </tr>
+                            ))}
                         </tbody>
+
                     </table>
                 </div>
             )}

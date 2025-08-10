@@ -14,7 +14,10 @@ import UserFormPage from "./pages/UserFormPage";
 import ProfilePage from "./pages/ProfilePage";
 import AddFriendPage from "./pages/AddFriendPage";
 import AccountPage from "./pages/AccountPage";
-import TransferPage from "./pages/TransfertPage"; // si tu veux protéger certaines pages
+import TransferPage from "./pages/TransfertPage";
+import HistoriquePage from "./pages/HistoriquePage";
+import AdminStatsPage from "./pages/AdminStatsPage";
+import AdminUsersPage from "./pages/AdminUsersPage"; // si tu veux protéger certaines pages
 
 export default function AppRoutes() {
     const { user, token } = useContext(AuthContext);
@@ -35,8 +38,9 @@ export default function AppRoutes() {
             <Route path="/add-friend" element={<PrivateRoute><AddFriendPage /></PrivateRoute>} />
             <Route path="/account" element={<PrivateRoute><AccountPage /></PrivateRoute>} />
             <Route path="/transfer" element={<PrivateRoute><TransferPage /></PrivateRoute>} />
-
-
+            <Route path="/historique" element={<HistoriquePage />} />
+            <Route path="/admin/stats" element={<AdminStatsPage user={user} />} />
+            <Route path="/admin/users" element={<AdminUsersPage user={user} token={token} />} />
 
 
 

@@ -3,6 +3,7 @@ import "../assets/css/style.css";
 import BuddyBankHeader from "../components/layout/BuddyBankHeader";
 import { AuthContext } from "../context/AuthContext";
 import api from "../services/axiosConfig";
+import {Link} from "react-router-dom";
 
 export default function AdminDashboardPage({ user, token }) {
     const { logout } = useContext(AuthContext);
@@ -10,6 +11,7 @@ export default function AdminDashboardPage({ user, token }) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
+    // Charger les stats
     useEffect(() => {
         const fetchStats = async () => {
             try {
@@ -49,17 +51,17 @@ export default function AdminDashboardPage({ user, token }) {
                     <div className="dashboard-section">
                         <h2>📊 Statistiques</h2>
                         <ul>
-                            <li>Utilisateurs : <b>{stats.userCount}</b></li>
-                            <li>Transactions : <b>{stats.transactionCount}</b></li>
-                            <li>Total commissions : <b>{stats.commissions} €</b></li>
+                            <li>Utilisateurs : <b>{stats.totalUsers}</b></li>
+                            <li>Transactions : <b>{stats.totalTransactions}</b></li>
+                            <li>Total commissions : <b>{stats.totalCommissions} €</b></li>
                         </ul>
                     </div>
                     <div className="dashboard-section">
                         <h2>👥 Gestion utilisateurs</h2>
-                        {/* Lien vers la gestion, ou petit aperçu */}
                         <p>
-                            <a href="/admin/users" className="bb-link-back">Gérer les utilisateurs</a>
+                            <Link to="/admin/users" className="bb-link-back">Gérer les utilisateurs</Link>
                         </p>
+
                     </div>
                 </div>
             </div>

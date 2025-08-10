@@ -97,10 +97,15 @@ export default function ManagerDashboardPage({ user, token }) {
                                         <tr key={tx.id}>
                                             <td>{tx.id}</td>
                                             {/* Corrige le nom du champ si besoin */}
-                                            <td>{tx.senderAccountId || tx.sender_accont_id}</td>
-                                            <td>{tx.receiverAccountId || tx.receiver_account_id}</td>
+                                            <td>
+                                                {tx.sender ? `${tx.sender.firstname} ${tx.sender.lastname}` : "?"}
+                                            </td>
+                                            <td>
+                                                {tx.receiver ? `${tx.receiver.firstname} ${tx.receiver.lastname}` : "?"}
+                                            </td>
                                             <td>{tx.amount} €</td>
-                                            <td>{new Date(tx.date).toLocaleString()}</td>
+                                            <td>{tx.createdAt ? new Date(tx.createdAt).toLocaleString() : "—"}</td>
+
                                         </tr>
                                     ))}
                                     </tbody>

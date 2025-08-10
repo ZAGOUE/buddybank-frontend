@@ -22,7 +22,7 @@ const DashboardPage = () => {
             <BuddyBankHeader user={user} onLogout={logout} />
             <div className="login-container d-flex justify-content-center align-items-center">
                 <div className="login-card text-center">
-                    <h2>Bienvenue {user?.firstName} 👋</h2>
+                    <h2>Bienvenue {user.firstname} 👋</h2>
 
                     <div className="mb-5 mb-lg-6"></div>
 
@@ -31,7 +31,7 @@ const DashboardPage = () => {
                     <button className="btn btn-outline-primary w-100 mb-2" onClick={goTo('/transfer')}>
                         💸 Faire un transfert
                     </button>
-                    <button className="btn btn-outline-primary w-100 mb-2" onClick={goTo('/transactions')}>
+                    <button className="btn btn-outline-primary w-100 mb-2" onClick={goTo('/historique')}>
                         📄 Historique des transactions
                     </button>
                     <button className="btn btn-outline-primary w-100 mb-2" onClick={goTo('/account')}>

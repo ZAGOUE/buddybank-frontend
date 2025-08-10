@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import api from '../services/axiosConfig';
-import { useNavigate } from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import { toast } from 'react-toastify';
 import '../assets/css/style.css';
 
@@ -47,6 +47,9 @@ const RegisterPage = () => {
     return (
         <div className="login-container d-flex justify-content-center align-items-center">
             <div className="login-card shadow p-4 rounded">
+                <Link to="/" style={{ color: "#1976d2", textDecoration: "none", fontSize: "1rem" }}>
+                    ← Retour à l'accueil
+                </Link>
                 <h2 className="text-center mb-4">Créer un compte</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="form-group mb-3">
