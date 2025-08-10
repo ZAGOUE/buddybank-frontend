@@ -5,7 +5,7 @@ import BuddyBankHeader from "../components/layout/BuddyBankHeader";
 export default function AdminStatsPage({ user, logout }) {
     const [stats, setStats] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+ //   const [error] = useState(null);
 
     useEffect(() => {
         setLoading(true);
