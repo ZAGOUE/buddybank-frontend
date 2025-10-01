@@ -14,9 +14,9 @@ export default function AdminUsersPage({ user, token }) {
             try {
                 const config = { headers: { Authorization: `Bearer ${token}` } };
                 const res = await api.get("/users", config);
-                // 👉 Pour n’afficher QUE les utilisateurs classiques :
+                // Pour n’afficher QUE les utilisateurs classiques :
                  setUsers(res.data.filter(u => u.role === "ROLE_USER"));
-               // setUsers(res.data); // Affiche tous les users, admin/manager compris
+
             } catch (err) {
                 setError("Impossible de charger les utilisateurs.");
             } finally {

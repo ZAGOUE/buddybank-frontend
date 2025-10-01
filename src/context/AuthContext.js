@@ -7,7 +7,7 @@ export const AuthProvider = ({ children }) => {
 
     const [user, setUser] = useState(null);
     const [token, setToken] = useState(null);
-    const [loading, setLoading] = useState(true); // ⬅️ nouveau
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         try {
@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }) => {
             console.error("Erreur de parsing du user :", error);
             localStorage.clear();
     } finally {
-        setLoading(false); // ✅ on termine toujours par désactiver le chargement
+        setLoading(false);
     }
 
     }, []);

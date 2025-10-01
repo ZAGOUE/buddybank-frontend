@@ -52,7 +52,7 @@ export default function BuddyBankHeader({ user, onLogout }) {
                         key={item.label}
                         className={
                             "bb-nav-btn" +
-                            ((location.pathname + location.hash) === item.path ? " active" : "") // à vérifier
+                            ((location.pathname + location.hash) === item.path ? " active" : "")
                         }
                         onClick={() => navigate(item.path)}
                     >

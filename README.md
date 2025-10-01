@@ -1,70 +1,175 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# BuddyBank — Frontend (React)
 
-## Available Scripts
+Un frontend **React 18** pour l’application bancaire _BuddyBank_. Il gère l’authentification **JWT**, la navigation par **rôles** (USER / ADMIN / MANAGER), l’accès aux fonctionnalités métiers (compte, transferts, utilisateurs, statistiques) et communique avec le backend via **Axios**.
 
-In the project directory, you can run:
+> **Stack courte :** Create React App, React Router, Axios, Bootstrap, React‑Toastify.
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## ✨ Fonctionnalités principales
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **Connexion / Inscription** (JWT) avec stockage du token dans `localStorage`.
+- **Menus et routes par rôle** :
+    - `ROLE_USER` : Dashboard, Transférer, Historique, Ajouter un ami, Compte, Profil.
+    - `ROLE_ADMIN` : Dashboard admin, Statistiques, Transactions, Gestion des utilisateurs.
+    - `ROLE_MANAGER` : Vue globale manager, Transactions, Liste/gestion des utilisateurs.
+- **Protection de routes** via un composant `PrivateRoute`.
+- **Intercepteur Axios** qui injecte automatiquement `Authorization: Bearer <token>`.
+- **Pages clés** : AccountPage, AddFriendPage, AdminDashboardPage, AdminStatsPage, AdminUsersPage, CreateAccountPage, DashboardPage, HistoriquePage, HomePage, LoginPage, ManagerDashboardPage, ProfilePage, RegisterPage, TransfertPage, UserFormPage, UserListePage.
+- **UI responsive** : feuilles CSS dédiées + Bootstrap ; media‑queries présentes.
+- **Notifications** via React‑Toastify (succès/erreurs actions utilisateur).
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🏗️ Architecture (extrait)
 
-### `npm run build`
+```
+src/
+  assets/
+    css/                # styles globaux (App.css, index.css, style.css)
+  components/
+    layout/BuddyBankHeader.jsx
+    PrivateRoute.jsx
+  context/
+    AuthContext.js      # gestion user + token + login/logout
+  pages/                # écrans (Dashboard, Login, Register, Profile, ...)
+  services/
+    axiosConfig.js      # baseURL + intercepteur JWT
+  AppRoutes.jsx         # définition des routes
+  App.js, index.js
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **AuthContext** : stocke `user` et `token` dans `localStorage`, expose `login` / `logout`.
+- **axiosConfig** : `baseURL = $REACT_APP_API_BASE_URL/api` + intercepteur JWT.
+- **BuddyBankHeader** : **menu dynamique** selon `user.role`.
+- **AppRoutes** : routes publiques/privées et **redirections** selon le rôle.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 🔧 Prérequis
 
-### `npm run eject`
+- **Node.js 18+** 
+- **npm 9+** 
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## ⚙️ Configuration
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Créez un fichier `.env` à la racine du frontend (déjà présent dans l’archive) :
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```env
+REACT_APP_API_BASE_URL=https://buddybank-backend-4ca2e1485d45.herokuapp.com
+GENERATE_SOURCEMAP=false
+```
 
-## Learn More
+- En **local**, remplacez l’URL par celle de votre backend (ex. `http://localhost:8080`).
+- Sur **Netlify **, définissez la **variable d’environnement** `REACT_APP_API_BASE_URL` dans le tableau de bord du service d’hébergement.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+> **Important** : Les variables qui commencent par `REACT_APP_` sont injectées au build CRA.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
+## ▶️ Démarrage rapide (dev)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```bash
+# 1) Installer les dépendances
+npm install
 
-### Analyzing the Bundle Size
+# 2) Lancer le serveur de dev (http://localhost:3000)
+npm start
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+# 3) Lancer les tests (React Testing Library)
+npm test
 
-### Making a Progressive Web App
+# 4) Construire une version de production
+npm run build
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Scripts disponibles (extrait du `package.json`) :
 
-### Advanced Configuration
+- `start` — démarre le serveur de développement CRA.
+- `build` — génère le build de production dans `build/`.
+- `test` — lance la suite de tests avec React Testing Library.
+- `eject` — **option CRA** (irréversible) : exporte la configuration Webpack/Babel.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+---
 
-### Deployment
+## 🔐 Sécurité côté frontend
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- **JWT** stocké dans `localStorage` (`user`, `token`).
+- **Intercepteur Axios** : ajoute `Authorization: Bearer <token>` si présent.
+- **PrivateRoute** : bloque l’accès aux pages protégées si l’utilisateur n’est pas connecté.
+- **Redirection par rôle** après login (ex. ADMIN → `/admin-dashboard`, MANAGER → `/manager-dashboard`, USER → vérification de l’existence d’un compte puis `/dashboard` ou `/create-account`).
 
-### `npm run build` fails to minify
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 🌐 Endpoints utilisés (attendus côté backend)
+
+Exemples vus dans le code :
+- `POST /api/auth/login` — authentification, renvoie `{{ user, token }}`.
+- `GET  /api/accounts/my` — récupère le compte du user connecté (USER).
+- `GET  /api/manager/users-count`, `GET /api/manager/transactions` (MANAGER).
+- `GET  /api/admin/stats`, `GET /api/admin/users` (ADMIN).
+- Autres pages : création de compte, transfert, historique, gestion d’utilisateurs, etc.
+
+> Assurez‑vous que votre backend expose ces routes et gère bien les **rôles**.
+
+---
+
+## 🎨 UI / UX
+
+- **Bootstrap** pour une base de composants et la grille responsive.
+- **CSS custom** (`src/assets/css/style.css`) : cartes, en‑têtes, tableaux, boutons.
+- **Responsive** : media‑queries (ex. `@media (max-width: 600px) {{ ... }}`).
+
+---
+
+## ✅ Tests
+
+- Dépendances présentes : React Testing Library (`@testing-library/*`) et `jest-dom`.
+- Exemple d’exécution : `npm test` (watch mode par défaut).
+
+---
+
+## 🚀 Déploiement
+
+- **Netlify** : build CRA classique (`npm run build`), puis déploiement de `build/`.
+- Définissez `REACT_APP_API_BASE_URL` dans les variables d’environnement de l’hébergeur.
+- Prévoir la **politique CORS** côté backend pour l’URL d’hébergement du frontend.
+
+---
+
+## 📁 Dépendances principales
+
+- `@testing-library/dom`
+- `@testing-library/jest-dom`
+- `@testing-library/react`
+- `@testing-library/user-event`
+- `axios`
+- `bootstrap`
+- `react`
+- `react-dom`
+- `react-router-dom`
+- `react-scripts`
+- `react-toastify`
+- `web-vitals`
+
+
+
+---
+
+## 🧭 Roadmap / Evolution vers V2
+
+- Gestion d’erreurs et d’états de chargement plus fine (_skeletons_, placeholders).
+- Composants UI réutilisables (cartes, tableaux, formulaires).
+- Tests d’intégration des pages clés (Login, Dashboard par rôle, Transfert).
+- Accessibilité (ARIA, focus, navigation clavier) et micro‑interactions.
+- Internationalisation (fr/en) via `react-intl` ou `i18next`.
+- Progressive Web App (PWA) si besoin d’offline léger.
+
+---
+
+## 🤝 Licence & crédits
+
+Projet pédagogique dans le cadre d’un parcours CDA. Merci aux bibliothèques open‑source utilisées par BuddyBank.

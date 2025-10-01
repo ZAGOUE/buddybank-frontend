@@ -17,7 +17,7 @@ import AccountPage from "./pages/AccountPage";
 import TransferPage from "./pages/TransfertPage";
 import HistoriquePage from "./pages/HistoriquePage";
 import AdminStatsPage from "./pages/AdminStatsPage";
-import AdminUsersPage from "./pages/AdminUsersPage"; // si tu veux protéger certaines pages
+import AdminUsersPage from "./pages/AdminUsersPage"; 
 
 export default function AppRoutes() {
     const { user, token } = useContext(AuthContext);

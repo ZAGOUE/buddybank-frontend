@@ -19,8 +19,8 @@ export default function AddFriendPage() {
         })
             .then(res => {
                 console.log("Donnée brute amis:", res.data);
-                // Utilise la bonne structure selon ce que tu vois dans le log :
-                setFriends(res.data); // OU setFriends(res.data.map(f => f.friend));
+
+                setFriends(res.data);
             })
             .catch(() => setFriends([]));
     }, [user]);
@@ -116,7 +116,7 @@ export default function AddFriendPage() {
                 </table>
             )}
 
-            {/* Liste d'amis déjà ajoutés avec présentation sympa */}
+            {/* Liste d'amis déjà ajoutés avec présentation */}
             {friends.length > 0 && (
                 <div className="mt-5">
                     <h4 className="mb-3">Mes amis déjà ajoutés</h4>

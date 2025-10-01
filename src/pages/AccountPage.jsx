@@ -73,7 +73,7 @@ export default function AccountPage() {
                 <div className="alert alert-warning mt-3">
                     Vous n’avez pas encore de compte bancaire ouvert.
                 </div>
-                {/* Ici tu peux mettre un bouton pour créer un compte */}
+                {}
             </div>
         );
     }
